@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "parcel-transformer-pwa-manifest": "^0.1.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.1",
+    "three": "^0.151.3"
+  },
+  "scripts": {
+    "start": "npx parcel ./index.html",
+    "build": "npx parcel build ./index.html"
+  },
+  "devDependencies": {
+    "@parcel/packager-raw-url": "^2.10.3",
+    "@parcel/transformer-glsl": "^2.10.3",
+    "@parcel/transformer-webmanifest": "^2.10.3",
+    "process": "^0.11.10"
+  }
+}
