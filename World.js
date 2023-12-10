@@ -22,7 +22,7 @@ class World {
     this.container.appendChild(this.renderer.domElement);
     this.resize();
 
-    window.addEventListener("mousemove", this.onMouseMove.bind(this));
+    // window.addEventListener("mousemove", this.onMouseMove.bind(this));
     window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener(
       "deviceorientation",

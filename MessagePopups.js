@@ -7,6 +7,9 @@ export const MessagePopups = () => {
       <UnitElement position={[15, 25]} />
       <UnitElement position={[50, 10]} />
       <UnitElement position={[65, 45]} />
+      {/* <button onClick={fetchData} style={{ pointerEvents: "all" }}>
+        MAKE REQUEST
+      </button> */}
     </Wrapper>
   );
 };
@@ -96,7 +99,6 @@ const Unit = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
 `;
 
 const Message = styled.p`
@@ -108,7 +110,6 @@ const Message = styled.p`
   text-align: center;
   font-weight: bolder;
   /* white-space: nowrap; */
-  border: 1px solid green;
   width: 200px;
   transform: ${({ $showMessage }) =>
     $showMessage ? "translate(0, 0)" : "translate(0,10px)"};

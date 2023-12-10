@@ -5,6 +5,7 @@ import { Experience } from "./World";
 import { RotateDeviceBanner } from "./RotateDeviceBanner";
 import { AskPermissionBanner } from "./AskPermissionBanner";
 import { MessagePopups } from "./MessagePopups";
+import { Chatbot } from "./Chatbot";
 import styled from "styled-components";
 
 export const App = () => {
@@ -36,18 +37,19 @@ export const App = () => {
       .removeEventListener("change", handler);
   }, []);
 
-  if (!isMobile) return <UseMobileBanner />;
+  // if (!isMobile) return <UseMobileBanner />;
 
-  if (!isPWA) return <UsePWABanner />;
+  // if (!isPWA) return <UsePWABanner />;
 
-  if (!isPermission)
-    return <AskPermissionBanner setPermission={setIsPermission} />;
+  // if (!isPermission)
+  //   return <AskPermissionBanner setPermission={setIsPermission} />;
 
   return (
     <Container>
       {!isLandscape && <RotateDeviceBanner />}
       <Experience setLoaded={setIsLoaded} />
       {isLoaded && <MessagePopups />}
+      {isLoaded && <Chatbot />}
     </Container>
   );
 };
