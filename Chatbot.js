@@ -20,62 +20,50 @@ const identity = makeid(10);
 let hasOpenedChatWindow = false;
 
 export const Chatbot = () => {
-  //   useEffect(() => {
-  //     const t = async () => {
-  //       const res = await fetch("https://jewelreyserver.onrender.com/start", {
-  //         method: "POST",
-  //         body: identity,
-  //       });
-  //       console.log({ res });
-  //     };
-  //     t();
-  //   }, []);
+  useEffect(() => {
+    const t = async () => {
+      const res = await fetch("https://jewelreyserver.onrender.com/start", {
+        method: "POST",
+        body: identity,
+      });
+      console.log({ res });
+    };
+    t();
+  }, []);
 
   const [isActve, setIsActive] = useState(false);
 
-  const [logs, setLogs] = useState([
-    { message: "rwgor helve pefe fe.", bot: true },
-    { message: "rwgor helve pefe fe.", bot: false },
-    { message: "rwgor helve pefe fe.", bot: true },
-    { message: "rwgor helve pefe fe.", bot: true },
-    { message: "rwgor helve pefe fe.", bot: false },
-    { message: "rwgor helve pefe fe.", bot: true },
-    { message: "rwgor helve pefe fe.", bot: false },
-    { message: "rwgor helve pefe fe.", bot: true },
-    { message: "rwgor helve pefe fe.", bot: false },
-    { message: "rwgor helve pefe fe.", bot: true },
-  ]);
+  const [logs, setLogs] = useState([]);
 
   const [userMessage, setUserMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
 
-  //   useEffect(() => {
-  //     if (!hasOpenedChatWindow && isActve) {
-  //       hasOpenedChatWindow = true;
-  //       const t = async () => {
-  //         setLoading(true);
+  useEffect(() => {
+    if (!hasOpenedChatWindow && isActve) {
+      hasOpenedChatWindow = true;
+      const t = async () => {
+        setLoading(true);
 
-  //         const res = await fetch(
-  //           "https://jewelreyserver.onrender.com/openChatWindow",
-  //           {
-  //             method: "POST",
-  //             body: identity,
-  //           }
-  //         );
-  //         console.log({ res });
+        const res = await fetch(
+          "https://jewelreyserver.onrender.com/openChatWindow",
+          {
+            method: "POST",
+            body: identity,
+          }
+        );
 
-  //         setLoading(false);
+        setLoading(false);
 
-  //         const t = await res.text();
+        const t = await res.text();
 
-  //         setLogs((prev) => {
-  //           return [...prev, { message: t, bot: true }];
-  //         });
-  //       };
-  //       t();
-  //     }
-  //   }, [isActve]);
+        setLogs((prev) => {
+          return [...prev, { message: t, bot: true }];
+        });
+      };
+      t();
+    }
+  }, [isActve]);
 
   const onSubmitMessage = async () => {
     if (!userMessage.trim()) return;
@@ -83,8 +71,6 @@ export const Chatbot = () => {
     setLogs((prev) => {
       return [...prev, { message: userMessage, bot: false }];
     });
-
-    return;
 
     setUserMessage("");
 
@@ -225,8 +211,9 @@ const Chatlog = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  overflow: auto;
+  overflow: scroll;
   padding: 15px 0;
+  pointer-events: all;
 `;
 
 const Bubble = styled.p`
@@ -239,12 +226,13 @@ const Bubble = styled.p`
 `;
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
   height: 100%;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 6;
 `;
 
 const UserInput = styled.input`
@@ -284,6 +272,8 @@ const ChatArea = styled.div`
   font-size: 15px;
   color: white;
   text-shadow: 1px 1px #0a0a0a99;
+  z-index: 10;
+  pointer-events: all;
 `;
 
 const CloseButton = styled.button`
@@ -314,12 +304,12 @@ const BoinkDog = styled.img`
 const ChatWindow = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   pointer-events: all;
   background-color: #000000df;
   transform: ${(props) =>
     props.$active ? "translateY(0)" : "translateY(100%)"};
-  transition: transform 1s;
+  transition: transform 0.5s;
   z-index: 6;
 `;
 

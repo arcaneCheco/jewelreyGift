@@ -5,8 +5,6 @@ import mapSrc from "./imageMap.jpeg";
 import depthSrc from "./depthMap.png";
 import styled from "styled-components";
 import { createRef, useEffect, useState } from "react";
-import vertex2 from "./vertex2.glsl";
-import frag2 from "./frag2.glsl";
 
 let a = 0;
 
@@ -20,10 +18,10 @@ class World {
   setContainer(container) {
     this.container = container;
     this.container.appendChild(this.renderer.domElement);
-    this.resize();
+    // this.resize();
 
     // window.addEventListener("mousemove", this.onMouseMove.bind(this));
-    window.addEventListener("resize", this.resize.bind(this));
+    // window.addEventListener("resize", this.resize.bind(this));
     window.addEventListener(
       "deviceorientation",
       this.onDeviceOrientation.bind(this)
@@ -31,24 +29,12 @@ class World {
   }
 
   onDeviceOrientation({ alpha, beta, gamma }) {
-    const rotatedY =
-      //   Math.min(Math.max(parseInt(Math.floor(gamma + 45)), 0), 90) / 90;
+    let rotatedY =
       Math.min(Math.max(parseInt(Math.floor(gamma)), -45), 45) / 90;
     const rotatedX =
       Math.min(Math.max(parseInt(Math.floor(beta)), -45), 45) / 90;
-    // if (a % 9 === 0) {
-    //   //   console.log({ alpha, beta, gamma });
-    //   console.log({ rotatedX, rotatedY });
-    // }
-    // a++;
-
-    // const x = clientX / this.width - 0.5;
-    // const y = -clientY / this.height + 0.5;
     this.material.uniforms.uMouse.value.x = rotatedX;
     this.material.uniforms.uMouse.value.y = rotatedY;
-    // if (this.material) {
-    // //   this.material.uniforms.uMouse.value.y = y;
-    // }
   }
 
   setup() {
@@ -57,8 +43,6 @@ class World {
     this.camera = new THREE.PerspectiveCamera(65, 2, 0.1, 1000);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.camera.position.z = 50;
-
-    // this.addBlink();
   }
 
   async load() {
@@ -82,6 +66,8 @@ class World {
         }
       });
     });
+
+    this.resize();
   }
 
   addObject() {
@@ -101,32 +87,26 @@ class World {
     this.scene.add(this.mesh);
   }
 
-  addBlink() {
-    const geometry = new THREE.PlaneGeometry(300, 300);
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: vertex2,
-      fragmentShader: frag2,
-    });
-    const mesh = new THREE.Mesh(geometry, mat);
-    mesh.position.z = 0.1;
-    // mesh.rotation.x = -Math.PI / 2;
-    this.scene.add(mesh);
-  }
-
-  onMouseMove({ clientX, clientY }) {
-    const x = clientX / this.width - 0.5;
-    const y = -clientY / this.height + 0.5;
-    if (this.material) {
-      this.material.uniforms.uMouse.value.x = x;
-      this.material.uniforms.uMouse.value.y = y;
-    }
-  }
+  // onMouseMove({ clientX, clientY }) {
+  //   const x = clientX / this.width - 0.5;
+  //   const y = -clientY / this.height + 0.5;
+  //   if (this.material) {
+  //     this.material.uniforms.uMouse.value.x = x;
+  //     this.material.uniforms.uMouse.value.y = y;
+  //   }
+  // }
 
   resize() {
+    const dim1 = this.container.offsetWidth;
+    const dim2 = this.container.offsetHeight;
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
-    if (this.height > this.width) {
-      return;
+    if (dim1 > dim2) {
+      this.width = dim1;
+      this.height = dim2;
+    } else {
+      this.width = dim2;
+      this.height = dim1;
     }
     this.renderer.setSize(this.width, this.height);
     this.camera.aspect = this.width / this.height;
@@ -193,7 +173,9 @@ const Container = styled.div`
 const Loader = styled.div`
   height: 100%;
   width: 100%;
-  position: absolute;
+  position: fixed;
+  max-width: 100%;
+  max-height: 100%;
   color: white;
   font-size: 30px;
   display: flex;

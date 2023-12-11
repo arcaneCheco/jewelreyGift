@@ -10,7 +10,9 @@ export const UseMobileBanner = () => {
 };
 
 const Wrapper = styled.div`
-  position: absolute;
+  position: fixed;
+  max-width: 100%;
+  max-height: 100%;
   height: 100%;
   width: 100%;
   display: flex;

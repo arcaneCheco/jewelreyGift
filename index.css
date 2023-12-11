@@ -21,14 +21,7 @@ body {
     height: 100vh;
     height: var(--app-height);
     overflow: hidden;
-    position: absolute;
+    position: fixed;
     pointer-events: none;
 
-}
-
-.dummy {
-    height: 100px;
-    width: 100%;
-    background-color: red;
-    overflow: hidden;
 }
