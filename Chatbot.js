@@ -15,16 +15,20 @@ const makeid = (length) => {
   return result;
 };
 
-const identity = makeid(10);
+// const identity = makeid(10);
 
 let hasOpenedChatWindow = false;
 
 export const Chatbot = () => {
+  const [identity, setIdentity] = useState("");
+
   useEffect(() => {
+    const id = makeid(10);
+    setIdentity(id);
     const t = async () => {
       const res = await fetch("https://jewelreyserver.onrender.com/start", {
         method: "POST",
-        body: identity,
+        body: id,
       });
       console.log({ res });
     };
