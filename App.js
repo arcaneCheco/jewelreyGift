@@ -37,12 +37,12 @@ export const App = () => {
       .removeEventListener("change", handler);
   }, []);
 
-  if (!isMobile) return <UseMobileBanner />;
+  // if (!isMobile) return <UseMobileBanner />;
 
-  if (!isPWA) return <UsePWABanner />;
+  // if (!isPWA) return <UsePWABanner />;
 
-  if (!isPermission)
-    return <AskPermissionBanner setPermission={setIsPermission} />;
+  // if (!isPermission)
+  //   return <AskPermissionBanner setPermission={setIsPermission} />;
 
   return (
     <Container>

@@ -132,6 +132,11 @@ class World {
 
 const world = new World();
 
+let worldLoaded = false;
+let checkedServer = false;
+let worldTriggered = false;
+let to = null;
+
 export const Experience = ({ setLoaded }) => {
   const ref = createRef();
 
@@ -141,14 +146,44 @@ export const Experience = ({ setLoaded }) => {
     world.setContainer(ref.current);
   }, []);
 
+  const triggerWorld = () => {
+    setIsLoaded(true);
+    setLoaded(true);
+    world.render();
+  };
+
   useEffect(() => {
     const func = async () => {
       await world.load();
-      setIsLoaded(true);
-      setLoaded(true);
-      world.render();
+      worldLoaded = true;
+      if (checkedServer && !worldTriggered) {
+        worldTriggered = true;
+        triggerWorld();
+      }
     };
     func();
+  }, []);
+
+  useEffect(() => {
+    to = window.setInterval(() => {
+      fetch("https://jewelreyserver.onrender.com/healthCheck")
+        // fetch("http://localhost:3000/healthCheck")
+        .then((response) => {
+          response.text().then((result) => {
+            if (result === "OK") {
+              checkedServer = true;
+              if (worldLoaded && !worldTriggered) {
+                worldTriggered = true;
+                triggerWorld();
+              }
+              window.clearInterval(to);
+            }
+          });
+        })
+        .catch((err) => {
+          console.log("ERROR !");
+        });
+    }, 1000);
   }, []);
 
   return (
