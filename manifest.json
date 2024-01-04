@@ -6,8 +6,8 @@
     "background_color": "#ffffff",
     "icons": [
     {
-      "src": "boinkDogIcon.png",
-      "sizes": "192x192",
+      "src": "winterIcon.png",
+      "sizes": "128x128",
       "type": "image/png"
     }]
   }

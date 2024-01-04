@@ -1,6 +1,6 @@
 import { useState, useEffect, createRef } from "react";
 import styled, { keyframes } from "styled-components";
-import dogSrc from "./boinkDog.png";
+import dogSrc from "./winterSrc.png";
 
 const makeid = (length) => {
   let result = "";
@@ -301,8 +301,10 @@ const CloseButton = styled.button`
 const BoinkDog = styled.img`
   position: absolute;
   height: 60%;
-  right: 0;
-  bottom: 0;
+  /* right: 0;
+  bottom: 0; */
+  bottom: 7%;
+  right: 2%;
 `;
 
 const ChatWindow = styled.div`
